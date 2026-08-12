@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "call_driver_agency/wsgi.py": {
+      "maxDuration": 60
+    }
+  }
+}

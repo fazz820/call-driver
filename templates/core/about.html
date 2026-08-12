@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About Us{% endblock %}
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold mb-4">About Call Driver Agency</h1>
+                <p class="lead text-muted mb-4">
+                    We are a premier driver services company dedicated to providing safe, reliable, and professional transportation solutions.
+                </p>
+                <p class="text-muted">
+                    {{ settings.about_text|default:'Founded with a vision to transform the way people travel, Call Driver Agency connects passengers with professional drivers at the tap of a button. Our platform offers a wide range of services from airport transfers to hourly rentals, ensuring you get where you need to go, when you need to get there.' }}
+                </p>
+                <div class="row g-3 mt-4">
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-primary fs-4 me-2"></i>
+                            <span class="fw-semibold">Professional Drivers</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-primary fs-4 me-2"></i>
+                            <span class="fw-semibold">24/7 Support</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-primary fs-4 me-2"></i>
+                            <span class="fw-semibold">Competitive Pricing</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-primary fs-4 me-2"></i>
+                            <span class="fw-semibold">GPS Tracking</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-primary fs-4 me-2"></i>
+                            <span class="fw-semibold">Safe & Secure</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-primary fs-4 me-2"></i>
+                            <span class="fw-semibold">Easy Booking</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="bg-light rounded-4 p-5 text-center">
+                    <i class="bi bi-car-front display-1 text-primary"></i>
+                    <h3 class="fw-bold mt-3">Our Mission</h3>
+                    <p class="text-muted">To provide reliable, affordable, and professional driver services that exceed our customers expectations every time.</p>
+                    <div class="row mt-4">
+                        <div class="col-4">
+                            <h4 class="fw-bold text-primary">10k+</h4>
+                            <small class="text-muted">Trips</small>
+                        </div>
+                        <div class="col-4">
+                            <h4 class="fw-bold text-primary">200+</h4>
+                            <small class="text-muted">Drivers</small>
+                        </div>
+                        <div class="col-4">
+                            <h4 class="fw-bold text-primary">4.8</h4>
+                            <small class="text-muted">Rating</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-4">Why Choose Us?</h2>
+        <div class="row g-4 mt-2">
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <i class="bi bi-shield-check display-5 text-primary"></i>
+                        <h5 class="fw-bold mt-3">Safety First</h5>
+                        <p class="text-muted small mb-0">All drivers are verified and vehicles regularly inspected.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <i class="bi bi-clock display-5 text-primary"></i>
+                        <h5 class="fw-bold mt-3">Always on Time</h5>
+                        <p class="text-muted small mb-0">Punctuality is our promise. We value your time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <i class="bi bi-cash-coin display-5 text-primary"></i>
+                        <h5 class="fw-bold mt-3">Fair Pricing</h5>
+                        <p class="text-muted small mb-0">Transparent pricing with no hidden fees.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <i class="bi bi-headset display-5 text-primary"></i>
+                        <h5 class="fw-bold mt-3">24/7 Support</h5>
+                        <p class="text-muted small mb-0">Our team is available around the clock to help you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

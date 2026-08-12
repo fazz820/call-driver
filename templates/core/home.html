@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<section class="hero-section text-white">
+    <video autoplay muted loop playsinline class="hero-video">
+        <source src="{% static 'videos/driver-bg.mp4' %}" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 hero-content">
+                <h1 class="display-3 fw-bold mb-3 animate-fade-up">Your Ride, Anytime, Anywhere</h1>
+                <p class="lead fs-4 mb-4 animate-fade-up animation-delay-1">
+                    Professional driver services at your fingertips. Book a ride with us and experience the difference.
+                </p>
+                <div class="d-flex gap-3 flex-wrap animate-fade-up animation-delay-2">
+                    <a href="{% url 'bookings:create' %}" class="btn btn-primary btn-lg px-5 py-3 fw-semibold">
+                        <i class="bi bi-car-front me-2"></i>Book a Ride
+                    </a>
+                    <a href="{% url 'core:services' %}" class="btn btn-outline-light btn-lg px-5 py-3 fw-semibold">
+                        <i class="bi bi-grid me-2"></i>Our Services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-car-wrapper">
+        <div class="hero-car">
+            <svg viewBox="0 0 320 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#64b5f6"/>
+                        <stop offset="100%" stop-color="#1565c0"/>
+                    </linearGradient>
+                    <linearGradient id="carShadow" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#0d2137"/>
+                        <stop offset="100%" stop-color="#0a1628"/>
+                    </linearGradient>
+                </defs>
+                <path d="M60 95 L60 75 Q60 65 70 65 L85 65 L95 40 Q100 30 110 30 L220 30 Q230 30 235 40 L245 65 L260 65 Q270 65 270 75 L270 95 Z"
+                      fill="url(#carBody)" stroke="#0a1628" stroke-width="2"/>
+                <path d="M70 75 L85 75 L95 50 L110 50 L110 75 Z" fill="#0d2137" opacity="0.4"/>
+                <rect x="110" y="45" width="105" height="30" rx="4" fill="#0d2137" opacity="0.3"/>
+                <path d="M230 75 L215 75 L205 50 L190 50 L190 75 Z" fill="#0d2137" opacity="0.4"/>
+                <ellipse cx="95" cy="100" rx="22" ry="18" fill="#1a1a2e" stroke="#2a2a3e" stroke-width="2"/>
+                <ellipse cx="95" cy="100" rx="14" ry="11" fill="#2a2a3e"/>
+                <ellipse cx="235" cy="100" rx="22" ry="18" fill="#1a1a2e" stroke="#2a2a3e" stroke-width="2"/>
+                <ellipse cx="235" cy="100" rx="14" ry="11" fill="#2a2a3e"/>
+                <line x1="95" y1="100" x2="95" y2="100" stroke="#1565c0" stroke-width="2"/>
+                <rect x="140" y="58" width="50" height="4" rx="2" fill="#1565c0" opacity="0.6"/>
+                <rect x="260" y="80" width="12" height="8" rx="2" fill="#ffcc00" opacity="0.3"/>
+                <rect x="262" y="82" width="8" height="4" rx="1" fill="#ffcc00" opacity="0.5"/>
+            </svg>
+        </div>
+        <div class="hero-car-headlight"></div>
+        <div class="hero-speed-lines">
+            <div class="hero-speed-line"></div>
+            <div class="hero-speed-line"></div>
+            <div class="hero-speed-line"></div>
+            <div class="hero-speed-line"></div>
+        </div>
+    </div>
+
+    <div class="hero-road">
+        <div class="hero-road-edge top"></div>
+        <div class="hero-road-lines"></div>
+        <div class="hero-road-edge bottom"></div>
+    </div>
+</section>
+
+<section class="py-5" data-aos="fade-up">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3 col-6">
+                <div class="text-center py-3 stat-item">
+                    <i class="bi bi-car-front display-4 text-primary"></i>
+                    <h5 class="stat-number mt-2">500+</h5>
+                    <p class="stat-label mb-0">Vehicles</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="text-center py-3 stat-item">
+                    <i class="bi bi-people display-4 text-primary"></i>
+                    <h5 class="stat-number mt-2">200+</h5>
+                    <p class="stat-label mb-0">Drivers</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="text-center py-3 stat-item">
+                    <i class="bi bi-journal-check display-4 text-primary"></i>
+                    <h5 class="stat-number mt-2">10k+</h5>
+                    <p class="stat-label mb-0">Trips Done</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="text-center py-3 stat-item">
+                    <i class="bi bi-star display-4 text-primary"></i>
+                    <h5 class="stat-number mt-2">4.8</h5>
+                    <p class="stat-label mb-0">Rating</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light" data-aos="fade-up">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Our Services</h2>
+            <p class="text-muted fs-5">Choose from a wide range of professional driver services</p>
+        </div>
+        <div class="row g-4">
+            {% for service in services %}
+                <div class="col-md-4 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm service-card">
+                        {% if service.image %}
+                            <a href="{% url 'services:detail' service.slug %}">
+                                <img src="{{ service.image.url }}" alt="{{ service.name }}" class="card-img-top" style="height:180px;object-fit:cover;">
+                            </a>
+                        {% endif %}
+                        <div class="card-body text-center p-4">
+                            <div class="service-icon mb-3">
+                                <i class="bi bi-{{ service.category.icon|default:'car-front' }} fs-1 text-primary"></i>
+                            </div>
+                            <h5 class="fw-bold">{{ service.name }}</h5>
+                            <p class="text-muted small">{{ service.description|truncatewords:15 }}</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fw-bold text-primary fs-5">${{ service.base_price }}</span>
+                                <span class="badge bg-light text-dark">{{ service.duration_minutes }} min</span>
+                            </div>
+                            <a href="{% url 'services:detail' service.slug %}" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">Services coming soon.</p>
+                </div>
+            {% endfor %}
+        </div>
+        {% if services %}
+            <div class="text-center mt-4">
+                <a href="{% url 'core:services' %}" class="btn btn-outline-primary btn-lg px-4">
+                    View All Services <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="py-5" data-aos="fade-up">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">How It Works</h2>
+            <p class="text-muted fs-5">Get a ride in three simple steps</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+                <div class="text-center step-card">
+                    <div class="step-number mx-auto mb-3">1</div>
+                    <i class="bi bi-journal-plus display-5 text-primary"></i>
+                    <h5 class="fw-bold mt-3">Book a Ride</h5>
+                    <p class="text-muted">Tell us where and when. Choose your preferred service and vehicle type.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-center step-card">
+                    <div class="step-number mx-auto mb-3">2</div>
+                    <i class="bi bi-person-check display-5 text-primary"></i>
+                    <h5 class="fw-bold mt-3">Get Matched</h5>
+                    <p class="text-muted">We assign a professional driver near you. Track your ride in real-time.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-center step-card">
+                    <div class="step-number mx-auto mb-3">3</div>
+                    <i class="bi bi-emoji-smile display-5 text-primary"></i>
+                    <h5 class="fw-bold mt-3">Enjoy the Ride</h5>
+                    <p class="text-muted">Sit back, relax, and arrive at your destination safely and on time.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if testimonials %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">What Our Clients Say</h2>
+            <p class="text-muted fs-5">Trusted by thousands of satisfied customers</p>
+        </div>
+        <div class="row g-4">
+            {% for testimonial in testimonials %}
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm testimonial-card">
+                        <div class="card-body p-4">
+                            <div class="mb-2">
+                                {% for i in "12345"|make_list %}
+                                    {% if forloop.counter <= testimonial.rating %}
+                                        <i class="bi bi-star-fill text-warning small"></i>
+                                    {% else %}
+                                        <i class="bi bi-star text-warning small"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <p class="card-text text-muted mb-3">"{{ testimonial.content }}"</p>
+                            <div class="d-flex align-items-center">
+                                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                    <span class="fw-bold">{{ testimonial.name|make_list|first|upper }}</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">{{ testimonial.name }}</h6>
+                                    <small class="text-muted">Verified Customer</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="py-5 bg-primary text-white text-center cta-section">
+    <div class="container">
+        <h2 class="fw-bold display-6 mb-3">Ready to Get Started?</h2>
+        <p class="lead fs-4 mb-4 mx-auto" style="max-width: 600px;">
+            Join thousands of satisfied customers. Book your ride now and experience premium driver services.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="{% url 'accounts:register_customer' %}" class="btn btn-light btn-lg px-5 py-3 fw-semibold text-primary">
+                <i class="bi bi-person-plus me-2"></i>Get Started
+            </a>
+            <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg px-5 py-3 fw-semibold">
+                <i class="bi bi-envelope me-2"></i>Contact Us
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Login - Call Driver Agency{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center py-3">
+                <h4 class="mb-0"><i class="bi bi-box-arrow-in-right me-2"></i>Login</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    {% include 'includes/form.html' %}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer bg-light text-center py-3">
+                <p class="mb-1">Don't have an account?</p>
+                <a href="{% url 'accounts:register_customer' %}" class="btn btn-outline-primary btn-sm me-2">
+                    <i class="bi bi-person-plus me-1"></i>Register as Customer
+                </a>
+                <a href="{% url 'accounts:register_driver' %}" class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-person-plus me-1"></i>Register as Driver
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

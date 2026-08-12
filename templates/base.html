@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Call Driver Agency{% endblock %} | Call Driver Agency</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div id="page-loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Loading...</div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'core:home' %}">
+                <i class="bi bi-car-front-fill me-2"></i>
+                {% if site_settings %}{{ site_settings.site_name }}{% else %}Call Driver Agency{% endif %}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'core:home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'core:services' %}">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'core:drivers' %}">Drivers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'core:contact' %}">Contact</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        {% if user.user_type == 'driver' %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'drivers:dashboard' %}"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
+                        {% elif user.user_type == 'admin' %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:admin_dashboard' %}"><i class="bi bi-speedometer2 me-1"></i>Admin</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'bookings:list' %}"><i class="bi bi-journal me-1"></i>Bookings</a></li>
+                        {% if user.user_type == 'customer' %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'bookings:create' %}"><i class="bi bi-plus-circle me-1"></i>Book a Ride</a></li>
+                        {% endif %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1"></i>{{ user.get_short_name|default:user.email }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="bi bi-person me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:change_password' %}"><i class="bi bi-key me-2"></i>Change Password</a></li>
+                                <li><a class="dropdown-item" href="{% url 'bookings:list' %}"><i class="bi bi-journal me-2"></i>{% if user.user_type == 'driver' %}My Trips{% else %}My Bookings{% endif %}</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="post" action="{% url 'accounts:logout' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right me-2"></i>Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}"><i class="bi bi-box-arrow-in-right me-1"></i>Login</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-person-plus me-1"></i>Register</a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="{% url 'accounts:register_customer' %}"><i class="bi bi-person me-2"></i>As Customer</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:register_driver' %}"><i class="bi bi-car-front me-2"></i>As Driver</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% if messages %}
+            <div class="container mt-3">
+                {% include 'includes/messages.html' %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-dark text-light pt-5 pb-4 mt-auto">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-car-front-fill me-2"></i>Call Driver Agency</h5>
+                    <p class="text-secondary">Professional driver services at your fingertips. Safe, reliable, and always on time.</p>
+                    {% if site_settings.facebook_url or site_settings.twitter_url or site_settings.instagram_url or site_settings.linkedin_url %}
+                        <div class="d-flex gap-2 mt-3">
+                            {% if site_settings.facebook_url %}<a href="{{ site_settings.facebook_url }}" class="btn btn-outline-light btn-sm rounded-circle" target="_blank"><i class="bi bi-facebook"></i></a>{% endif %}
+                            {% if site_settings.twitter_url %}<a href="{{ site_settings.twitter_url }}" class="btn btn-outline-light btn-sm rounded-circle" target="_blank"><i class="bi bi-twitter-x"></i></a>{% endif %}
+                            {% if site_settings.instagram_url %}<a href="{{ site_settings.instagram_url }}" class="btn btn-outline-light btn-sm rounded-circle" target="_blank"><i class="bi bi-instagram"></i></a>{% endif %}
+                            {% if site_settings.linkedin_url %}<a href="{{ site_settings.linkedin_url }}" class="btn btn-outline-light btn-sm rounded-circle" target="_blank"><i class="bi bi-linkedin"></i></a>{% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{% url 'core:home' %}" class="text-secondary text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="{% url 'core:about' %}" class="text-secondary text-decoration-none">About</a></li>
+                        <li class="mb-2"><a href="{% url 'core:services' %}" class="text-secondary text-decoration-none">Services</a></li>
+                        <li class="mb-2"><a href="{% url 'core:drivers' %}" class="text-secondary text-decoration-none">Drivers</a></li>
+                        <li class="mb-2"><a href="{% url 'core:contact' %}" class="text-secondary text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="fw-bold mb-3">For Users</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{% url 'accounts:login' %}" class="text-secondary text-decoration-none">Login</a></li>
+                        <li class="mb-2"><a href="{% url 'accounts:register_customer' %}" class="text-secondary text-decoration-none">Register</a></li>
+                        <li class="mb-2"><a href="{% url 'bookings:create' %}" class="text-secondary text-decoration-none">Book a Ride</a></li>
+                        <li class="mb-2"><a href="{% url 'bookings:list' %}" class="text-secondary text-decoration-none">My Bookings</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h6 class="fw-bold mb-3">Contact Info</h6>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i>{{ site_settings.contact_email|default:'info@calldriver.com' }}</li>
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i>{{ site_settings.contact_phone|default:'+1 (555) 123-4567' }}</li>
+                        <li class="mb-2"><i class="bi bi-geo-alt me-2"></i>{{ site_settings.address|default:'123 Main Street, City' }}</li>
+                        <li><i class="bi bi-clock me-2"></i>{{ site_settings.working_hours|default:'24/7 Service' }}</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="text-center text-secondary">
+                <p class="mb-0">&copy; {% now 'Y' %} Call Driver Agency. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Remove Vehicle - Call Driver Agency{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow border-danger">
+            <div class="card-header bg-danger text-white text-center py-3">
+                <h5 class="mb-0"><i class="bi bi-exclamation-triangle me-2"></i>Remove Vehicle</h5>
+            </div>
+            <div class="card-body text-center p-4">
+                <i class="bi bi-car-front display-3 text-danger"></i>
+                <h5 class="mt-3">Are you sure?</h5>
+                <p class="text-muted">
+                    You are about to remove <strong>{{ object.make }} {{ object.model }}</strong>
+                    ({{ object.license_plate }}). This action cannot be undone.
+                </p>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash me-2"></i>Yes, Remove
+                        </button>
+                        <a href="{% url 'drivers:dashboard' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

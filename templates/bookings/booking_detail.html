@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% block title %}Booking {{ booking.id|truncatechars:8 }} - Call Driver Agency{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0"><i class="bi bi-journal-text me-2"></i>Booking Details</h5>
+                <span class="badge bg-{{ booking.status_badge }} fs-6">{{ booking.get_status_display }}</span>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Booking ID</p>
+                        <p class="fw-bold"><code>{{ booking.id }}</code></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Service</p>
+                        <p class="fw-bold">{{ booking.service.name }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Customer</p>
+                        <p class="fw-bold">{{ booking.customer.get_full_name|default:booking.customer.email }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Driver</p>
+                        <p class="fw-bold">
+                            {% if booking.driver %}
+                                {{ booking.driver.user.get_full_name|default:booking.driver.user.email }}
+                            {% else %}
+                                <span class="text-warning">Not assigned</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="col-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Pickup Location</p>
+                        <p class="fw-bold">{{ booking.pickup_location }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Dropoff Location</p>
+                        <p class="fw-bold">{{ booking.dropoff_location }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Pickup Time</p>
+                        <p class="fw-bold">{{ booking.pickup_time|date:'F d, Y H:i' }}</p>
+                    </div>
+                    {% if booking.distance_km %}
+                        <div class="col-md-6">
+                            <p class="mb-1 text-muted small">Distance</p>
+                            <p class="fw-bold">{{ booking.distance_km }} km</p>
+                        </div>
+                    {% endif %}
+                    {% if booking.notes %}
+                        <div class="col-12">
+                            <p class="mb-1 text-muted small">Notes</p>
+                            <p>{{ booking.notes }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header bg-secondary text-white py-3">
+                <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>Status History</h5>
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    {% for log in booking.status_logs.all %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="badge bg-{{ log.status }} me-2">{{ log.get_status_display }}</span>
+                                {% if log.notes %}<small class="text-muted">{{ log.notes }}</small>{% endif %}
+                            </div>
+                            <small class="text-muted">{{ log.created_at|date:'M d, Y H:i' }}</small>
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item text-muted">No status updates recorded.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-dark text-white py-3">
+                <h5 class="mb-0"><i class="bi bi-credit-card me-2"></i>Payment</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Base Price:</span>
+                    <span>${{ booking.base_price }}</span>
+                </div>
+                {% if booking.distance_price %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Distance:</span>
+                        <span>${{ booking.distance_price }}</span>
+                    </div>
+                {% endif %}
+                <hr>
+                <div class="d-flex justify-content-between fw-bold fs-5">
+                    <span>Total:</span>
+                    <span>${{ booking.total_price }}</span>
+                </div>
+                {% if booking.payment %}
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <span>Payment:</span>
+                        <span class="badge {% if booking.payment.status == 'completed' %}bg-success{% else %}bg-warning{% endif %}">
+                            {{ booking.payment.get_status_display }}
+                        </span>
+                    </div>
+                    <small class="text-muted">{{ booking.payment.get_payment_method_display }}</small>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white py-3">
+                <h5 class="mb-0"><i class="bi bi-tools me-2"></i>Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    {% if user.user_type == 'customer' and booking.can_cancel %}
+                        <form method="post" action="{% url 'bookings:cancel' booking.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger w-100" onclick="return confirm('Are you sure you want to cancel this booking?')">
+                                <i class="bi bi-x-circle me-2"></i>Cancel Booking
+                            </button>
+                        </form>
+                    {% endif %}
+                    {% if user.user_type == 'admin' %}
+                        <a href="{% url 'bookings:assign_driver' booking.pk %}" class="btn btn-success">
+                            <i class="bi bi-person-plus me-2"></i>Assign Driver
+                        </a>
+                        <a href="{% url 'bookings:status_update' booking.pk %}" class="btn btn-warning">
+                            <i class="bi bi-arrow-repeat me-2"></i>Update Status
+                        </a>
+                    {% endif %}
+                    {% if user.user_type == 'driver' %}
+                        <a href="{% url 'bookings:status_update' booking.pk %}" class="btn btn-warning">
+                            <i class="bi bi-arrow-repeat me-2"></i>Update Status
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'bookings:list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-2"></i>Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
