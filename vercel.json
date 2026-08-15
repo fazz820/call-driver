@@ -1,8 +1,20 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-    "call_driver_agency/wsgi.py": {
-      "maxDuration": 60
+  "version": 2,
+  "builds": [
+    {
+      "src": "CALL_DRIVER_AGENCY/wsgi.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
     }
-  }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "CALL_DRIVER_AGENCY/wsgi.py"
+    }
+  ]
 }
