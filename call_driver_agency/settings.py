@@ -14,14 +14,8 @@ if not SECRET_KEY:
     else:
         raise ValueError('DJANGO_SECRET_KEY environment variable is required in production.')
 
-ALLOWED_HOSTS = [
-    'driveroncall.online',
-    'www.driveroncall.online',
-    'call-driver-az4kk4uzg-driver5.vercel.app',
-    '.vercel.app',
-    'localhost',
-    '127.0.0.1'
-]
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000').split(',')
 
 INSTALLED_APPS = [
@@ -85,12 +79,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'call_driver_agency.wsgi.application'
 
 DATABASES = {
-    'default': dj_database_url.config(
+    'default': dj_database_url.parse(
+        os.environ.get("DATABASE_URL"),
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
     )
-}
-
+}s
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
