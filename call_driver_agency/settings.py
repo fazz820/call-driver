@@ -14,10 +14,9 @@ if not SECRET_KEY:
     else:
         raise ValueError('DJANGO_SECRET_KEY environment variable is required in production.')
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000').split(',')
-
+CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
