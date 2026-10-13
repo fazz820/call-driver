@@ -14,7 +14,7 @@ if not SECRET_KEY:
     else:
         raise ValueError('DJANGO_SECRET_KEY environment variable is required in production.')
 
-ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1', 'driveroncall.online', 'www.driveroncall.online']
 
 CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app']
 INSTALLED_APPS = [
