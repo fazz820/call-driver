@@ -1,27 +1,37 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Our Services{% endblock %}
+{% block body_class %}site-public{% endblock %}
 {% block content %}
 
-<section class="py-5">
+<section class="page-hero" style="background-image: url('{% static 'images/services-band.jpg' %}');">
     <div class="container">
-        <div class="text-center mb-5">
-            <h1 class="display-5 fw-bold">Our Services</h1>
-            <p class="lead text-muted">Comprehensive driver services tailored to your needs</p>
-        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Services</li>
+            </ol>
+        </nav>
+        <span class="eyebrow">What We Offer</span>
+        <h1 class="display-5 fw-bold mb-2">Our Services</h1>
+        <p class="lead mb-0">Comprehensive driver services tailored to your needs.</p>
+    </div>
+</section>
 
+<section class="py-5 bg-white">
+    <div class="container">
         {% for category in categories %}
             <div class="mb-5" id="{{ category.slug }}">
                 <div class="d-flex align-items-center mb-4">
                     {% if category.image %}
-                        <img src="{{ category.image.url }}" alt="{{ category.name }}" class="rounded-circle me-3" width="50" height="50" style="object-fit:cover;">
+                        <img src="{{ category.image.url }}" alt="{{ category.name }}" class="rounded-circle me-3" width="56" height="56" style="object-fit:cover;border:2px solid rgba(212,175,55,.5);" loading="lazy" decoding="async">
                     {% else %}
-                        <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                        <div class="d-flex align-items-center justify-content-center me-3" style="width: 56px; height: 56px; border-radius: 16px; background: var(--gradient-gold); color:#0B132B;">
                             <i class="bi bi-{{ category.icon|default:'grid' }} fs-4"></i>
                         </div>
                     {% endif %}
                     <div>
-                        <h3 class="fw-bold mb-0">{{ category.name }}</h3>
+                        <h3 class="section-title h4 mb-0">{{ category.name }}</h3>
                         {% if category.description %}
                             <p class="text-muted mb-0">{{ category.description }}</p>
                         {% endif %}
@@ -33,7 +43,7 @@
                             <div class="card h-100 border-0 shadow-sm service-card">
                                 {% if service.image %}
                                     <a href="{% url 'services:detail' service.slug %}">
-                                        <img src="{{ service.image.url }}" alt="{{ service.name }}" class="card-img-top" style="height:180px;object-fit:cover;">
+                                        <img src="{{ service.image.url }}" alt="{{ service.name }}" class="card-img-top" style="height:190px;object-fit:cover;" loading="lazy" decoding="async">
                                     </a>
                                 {% endif %}
                                 <div class="card-body p-4">
@@ -66,7 +76,7 @@
             </div>
         {% endfor %}
 
-        <div class="text-center mt-5 bg-primary text-white rounded-4 p-5 cta-section">
+        <div class="text-center text-white rounded-4 p-5 cta-section cta-photo" style="--cta-img: url('{% static 'images/contact-band.jpg' %}');">
             <h3 class="fw-bold">Ready to Book?</h3>
             <p class="lead">Choose your service and book a ride in minutes.</p>
             <a href="{% url 'bookings:create' %}" class="btn btn-light btn-lg px-5 fw-semibold text-primary">

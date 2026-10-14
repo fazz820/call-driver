@@ -1,25 +1,35 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Our Drivers{% endblock %}
+{% block body_class %}site-public{% endblock %}
 {% block content %}
 
-<section class="py-5">
+<section class="page-hero" style="background-image: url('{% static 'images/professional-driver.jpg' %}');">
     <div class="container">
-        <div class="text-center mb-5">
-            <h1 class="display-5 fw-bold">Our Professional Drivers</h1>
-            <p class="lead text-muted">Meet our team of verified and experienced drivers</p>
-        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Drivers</li>
+            </ol>
+        </nav>
+        <span class="eyebrow">Meet The Team</span>
+        <h1 class="display-5 fw-bold mb-2">Our Professional Drivers</h1>
+        <p class="lead mb-0">Meet our team of professional and experienced drivers.</p>
+    </div>
+</section>
 
+<section class="py-5 bg-white">
+    <div class="container">
         <div class="row g-4">
             {% for driver in drivers %}
                 <div class="col-md-4 col-lg-3">
                     <div class="card h-100 border-0 shadow-sm driver-card">
                         <div class="card-body text-center p-4">
                             {% if driver.profile_image %}
-                                <img src="{{ driver.profile_image.url }}" alt="{{ driver.user.get_full_name }}" class="rounded-circle img-thumbnail mb-3" width="100" height="100" style="object-fit: cover;">
+                                <img src="{{ driver.profile_image.url }}" alt="{{ driver.user.get_full_name }}" class="rounded-circle img-thumbnail mb-3" width="100" height="100" style="object-fit: cover;" loading="lazy" decoding="async">
                             {% else %}
-                                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 100px; height: 100px;">
-                                    <span class="display-5 fw-bold">{{ driver.user.get_full_name|default:driver.user.email|make_list|first|upper }}</span>
+                                <div class="rounded-circle text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 100px; height: 100px; background: var(--gradient-gold); color:#0B132B;">
+                                    <span class="display-5 fw-bold text-dark">{{ driver.user.get_full_name|default:driver.user.email|make_list|first|upper }}</span>
                                 </div>
                             {% endif %}
                             <h5 class="fw-bold mb-1">{{ driver.user.get_full_name|default:driver.user.email }}</h5>
@@ -53,6 +63,17 @@
                 </div>
             {% endfor %}
         </div>
+    </div>
+</section>
+
+<section class="py-5 dark-section royal">
+    <div class="container text-center">
+        <span class="eyebrow">Join Our Team</span>
+        <h2 class="fw-bold mb-3">Drive With Call Driver Agency</h2>
+        <p class="mb-4 mx-auto" style="max-width: 560px;">Are you a professional driver? Register with us and start receiving trip requests.</p>
+        <a href="{% url 'accounts:register_driver' %}" class="btn btn-primary btn-lg px-5 fw-semibold">
+            <i class="bi bi-person-plus me-2"></i>Register as Driver
+        </a>
     </div>
 </section>
 {% endblock %}

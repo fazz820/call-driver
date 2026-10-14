@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}{{ service.name }} - Call Driver Agency{% endblock %}
+{% block body_class %}site-public{% endblock %}
 {% block content %}
 
 <section class="service-hero-section text-white">
@@ -44,7 +45,7 @@
                 {% if service.image %}
                     <img src="{{ service.image.url }}" alt="{{ service.name }}" class="img-fluid rounded-4 shadow" style="width:100%;max-height:400px;object-fit:cover;">
                 {% else %}
-                    <div class="bg-surface-card rounded-4 d-flex align-items-center justify-content-center" style="height:400px;">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="height:400px;background:#eef1f6;border:1px solid rgba(212,175,55,.35);">
                         <i class="bi bi-car-front display-1 text-muted"></i>
                     </div>
                 {% endif %}
@@ -54,21 +55,21 @@
 
                 <div class="row g-3 mb-4">
                     <div class="col-sm-4">
-                        <div class="card border-0 bg-surface-card text-center p-3 h-100">
+                        <div class="card border-0 text-center p-3 h-100">
                             <i class="bi bi-currency-dollar fs-3 text-primary"></i>
                             <h4 class="fw-bold mb-0">${{ service.base_price }}</h4>
                             <small class="text-muted">Base Price</small>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="card border-0 bg-surface-card text-center p-3 h-100">
+                        <div class="card border-0 text-center p-3 h-100">
                             <i class="bi bi-speedometer2 fs-3 text-primary"></i>
                             <h4 class="fw-bold mb-0">${{ service.price_per_km }}</h4>
                             <small class="text-muted">Per KM</small>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="card border-0 bg-surface-card text-center p-3 h-100">
+                        <div class="card border-0 text-center p-3 h-100">
                             <i class="bi bi-clock fs-3 text-primary"></i>
                             <h4 class="fw-bold mb-0">{{ service.duration_minutes }}</h4>
                             <small class="text-muted">Minutes</small>
@@ -80,6 +81,14 @@
                     <a href="{% url 'bookings:create' %}" class="btn btn-primary btn-lg py-3">
                         <i class="bi bi-car-front me-2"></i>Book This Service
                     </a>
+                    {% if site_settings.contact_phone %}
+                        <a href="tel:{{ site_settings.contact_phone|cut:' '|cut:'('|cut:')'|cut:'-' }}" class="btn btn-outline-primary btn-lg py-3">
+                            <i class="bi bi-telephone-fill me-2"></i>Call Now to Book
+                        </a>
+                        <a href="https://wa.me/{{ site_settings.contact_phone|cut:' '|cut:'+'|cut:'('|cut:')'|cut:'-' }}" target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg py-3">
+                            <i class="bi bi-whatsapp me-2"></i>WhatsApp Us
+                        </a>
+                    {% endif %}
                     <a href="{% url 'core:services' %}" class="btn btn-outline-secondary">
                         <i class="bi bi-arrow-left me-2"></i>Back to Services
                     </a>

@@ -1,88 +1,104 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Contact Us{% endblock %}
+{% block body_class %}site-public{% endblock %}
 {% block content %}
 
-<section class="py-5">
+<section class="page-hero" style="background-image: url('{% static 'images/contact-band.jpg' %}');">
     <div class="container">
-        <div class="text-center mb-5">
-            <div class="bg-primary bg-opacity-10 border border-primary border-opacity-25 rounded-4 p-4 mb-4">
-                <h4 class="fw-bold mb-1"><i class="bi bi-telephone-fill me-2"></i>Need a Driver? Call Us: <a href="tel:+917909251054" class="text-primary text-decoration-none">+91 79092 51054</a></h4>
-                <p class="text-muted mb-0 small">Available 24/7 for your travel needs</p>
-            </div>
-            <h1 class="display-5 fw-bold">Contact Us</h1>
-            <p class="lead text-muted">We'd love to hear from you. Get in touch with us.</p>
-        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contact</li>
+            </ol>
+        </nav>
+        <span class="eyebrow">Get In Touch</span>
+        <h1 class="display-5 fw-bold mb-2">Contact Us</h1>
+        <p class="lead mb-0">We'd love to hear from you. Get in touch with us.</p>
+    </div>
+</section>
 
+<section class="py-4 bg-white">
+    <div class="container">
+        <div class="text-center call-banner p-4 shadow-sm">
+            <h4 class="fw-bold mb-2"><i class="bi bi-telephone-fill text-primary me-2"></i>Need a Driver? Call Us: <a href="tel:{{ settings.contact_phone|cut:' '|cut:'('|cut:')'|cut:'-'|default:'+917909251054' }}" class="text-decoration-none">{{ settings.contact_phone|default:'+91 79092 51054' }}</a></h4>
+            <p class="text-muted mb-3 small">Available 24/7 for your travel needs</p>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                <a href="tel:{{ settings.contact_phone|cut:' '|cut:'('|cut:')'|cut:'-'|default:'+917909251054' }}" class="btn btn-primary px-4">
+                    <i class="bi bi-telephone-fill me-2"></i>Call Now
+                </a>
+                {% if settings.contact_phone %}
+                    <a href="https://wa.me/{{ settings.contact_phone|cut:' '|cut:'+'|cut:'('|cut:')'|cut:'-' }}" target="_blank" rel="noopener" class="btn btn-whatsapp px-4">
+                        <i class="bi bi-whatsapp me-2"></i>WhatsApp
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-white">
+    <div class="container">
         <div class="row g-5">
             <div class="col-lg-5">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body p-4">
-                        <h4 class="fw-bold mb-4">Get in Touch</h4>
-                        {% if settings %}
-                            <div class="d-flex mb-3">
-                                <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 45px; height: 45px;">
-                                    <i class="bi bi-envelope"></i>
-                                </div>
-                                <div>
-                                    <h6 class="fw-bold mb-1">Email</h6>
-                                    <p class="text-muted mb-0">{{ settings.contact_email|default:'info@calldriver.com' }}</p>
-                                </div>
+                <span class="eyebrow">Contact Details</span>
+                <h2 class="section-title mb-4">Get in Touch</h2>
+                {% if settings %}
+                    <div class="d-flex flex-column gap-3">
+                        <div class="contact-chip">
+                            <div class="ci"><i class="bi bi-envelope"></i></div>
+                            <div>
+                                <h6 class="fw-bold mb-1">Email</h6>
+                                <p class="mb-0 text-muted">{{ settings.contact_email|default:'info@calldriver.com' }}</p>
                             </div>
-                            <div class="d-flex mb-3">
-                                <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 45px; height: 45px;">
-                                    <i class="bi bi-telephone"></i>
-                                </div>
-                                <div>
-                                    <h6 class="fw-bold mb-1">Phone</h6>
-                                    <p class="text-muted mb-0">{{ settings.contact_phone|default:'+1 (555) 123-4567' }}</p>
-                                </div>
+                        </div>
+                        <div class="contact-chip">
+                            <div class="ci"><i class="bi bi-telephone"></i></div>
+                            <div>
+                                <h6 class="fw-bold mb-1">Phone</h6>
+                                <p class="mb-0 text-muted">{{ settings.contact_phone|default:'+1 (555) 123-4567' }}</p>
                             </div>
-                            <div class="d-flex mb-3">
-                                <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 45px; height: 45px;">
-                                    <i class="bi bi-geo-alt"></i>
-                                </div>
-                                <div>
-                                    <h6 class="fw-bold mb-1">Address</h6>
-                                    <p class="text-muted mb-0">{{ settings.address|default:'123 Main Street, City' }}</p>
-                                </div>
+                        </div>
+                        <div class="contact-chip">
+                            <div class="ci"><i class="bi bi-geo-alt"></i></div>
+                            <div>
+                                <h6 class="fw-bold mb-1">Address</h6>
+                                <p class="mb-0 text-muted">{{ settings.address|default:'123 Main Street, City' }}</p>
                             </div>
-                            <div class="d-flex">
-                                <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 45px; height: 45px;">
-                                    <i class="bi bi-clock"></i>
-                                </div>
-                                <div>
-                                    <h6 class="fw-bold mb-1">Working Hours</h6>
-                                    <p class="text-muted mb-0">{{ settings.working_hours|default:'Mon - Sun: 24/7' }}</p>
-                                </div>
+                        </div>
+                        <div class="contact-chip">
+                            <div class="ci"><i class="bi bi-clock"></i></div>
+                            <div>
+                                <h6 class="fw-bold mb-1">Working Hours</h6>
+                                <p class="mb-0 text-muted">{{ settings.working_hours|default:'Mon - Sun: 24/7' }}</p>
                             </div>
-                            {% if settings.facebook_url or settings.twitter_url or settings.instagram_url or settings.linkedin_url %}
-                                <hr>
-                                <h6 class="fw-bold mb-3">Follow Us</h6>
-                                <div class="d-flex gap-2">
-                                    {% if settings.facebook_url %}
-                                        <a href="{{ settings.facebook_url }}" class="btn btn-outline-primary btn-sm rounded-circle" target="_blank"><i class="bi bi-facebook"></i></a>
-                                    {% endif %}
-                                    {% if settings.twitter_url %}
-                                        <a href="{{ settings.twitter_url }}" class="btn btn-outline-primary btn-sm rounded-circle" target="_blank"><i class="bi bi-twitter-x"></i></a>
-                                    {% endif %}
-                                    {% if settings.instagram_url %}
-                                        <a href="{{ settings.instagram_url }}" class="btn btn-outline-primary btn-sm rounded-circle" target="_blank"><i class="bi bi-instagram"></i></a>
-                                    {% endif %}
-                                    {% if settings.linkedin_url %}
-                                        <a href="{{ settings.linkedin_url }}" class="btn btn-outline-primary btn-sm rounded-circle" target="_blank"><i class="bi bi-linkedin"></i></a>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        {% else %}
-                            <p class="text-muted">Contact information coming soon.</p>
-                        {% endif %}
+                        </div>
                     </div>
-                </div>
+                    {% if settings.facebook_url or settings.twitter_url or settings.instagram_url or settings.linkedin_url %}
+                        <hr class="my-4">
+                        <h6 class="fw-bold mb-3">Follow Us</h6>
+                        <div class="d-flex gap-2">
+                            {% if settings.facebook_url %}
+                                <a href="{{ settings.facebook_url }}" class="btn btn-outline-primary btn-sm rounded-circle" target="_blank" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                            {% endif %}
+                            {% if settings.twitter_url %}
+                                <a href="{{ settings.twitter_url }}" class="btn btn-outline-primary btn-sm rounded-circle" target="_blank" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+                            {% endif %}
+                            {% if settings.instagram_url %}
+                                <a href="{{ settings.instagram_url }}" class="btn btn-outline-primary btn-sm rounded-circle" target="_blank" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                            {% endif %}
+                            {% if settings.linkedin_url %}
+                                <a href="{{ settings.linkedin_url }}" class="btn btn-outline-primary btn-sm rounded-circle" target="_blank" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <p class="text-muted">Contact information coming soon.</p>
+                {% endif %}
             </div>
             <div class="col-lg-7">
                 <div class="card border-0 shadow-sm">
-                    <div class="card-body p-4">
+                    <div class="card-body p-4 p-lg-5">
                         <h4 class="fw-bold mb-4">Send us a Message</h4>
                         <form method="post">
                             {% csrf_token %}

@@ -8,12 +8,12 @@
     <title>{% block title %}Call Driver Agency{% endblock %} | Call Driver Agency</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
     <div id="page-loader">
         <div class="loader-content">
             <div class="loader-spinner"></div>
@@ -47,7 +47,7 @@
                         {% endif %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'bookings:list' %}"><i class="bi bi-journal me-1"></i>Bookings</a></li>
                         {% if user.user_type == 'customer' %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'bookings:create' %}"><i class="bi bi-plus-circle me-1"></i>Book a Ride</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'bookings:create' %}"><i class="bi bi-plus-circle me-1"></i>Book a Driver</a></li>
                         {% endif %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
@@ -76,6 +76,13 @@
                             </ul>
                         </li>
                     {% endif %}
+                    {% if site_settings.contact_phone %}
+                        <li class="nav-item d-none d-lg-flex align-items-center ms-lg-2">
+                            <a class="btn btn-primary btn-sm px-3" href="tel:{{ site_settings.contact_phone|cut:' '|cut:'('|cut:')'|cut:'-' }}">
+                                <i class="bi bi-telephone-fill me-1"></i>Call Now
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -90,7 +97,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-dark text-light pt-5 pb-4 mt-auto">
+    <footer class="text-light pt-5 pb-4 mt-auto">
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-4">
@@ -120,7 +127,7 @@
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="{% url 'accounts:login' %}" class="text-secondary text-decoration-none">Login</a></li>
                         <li class="mb-2"><a href="{% url 'accounts:register_customer' %}" class="text-secondary text-decoration-none">Register</a></li>
-                        <li class="mb-2"><a href="{% url 'bookings:create' %}" class="text-secondary text-decoration-none">Book a Ride</a></li>
+                        <li class="mb-2"><a href="{% url 'bookings:create' %}" class="text-secondary text-decoration-none">Book a Driver</a></li>
                         <li class="mb-2"><a href="{% url 'bookings:list' %}" class="text-secondary text-decoration-none">My Bookings</a></li>
                     </ul>
                 </div>
@@ -143,5 +150,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/script.js' %}"></script>
+
+    {% if site_settings.contact_phone %}
+        <a class="whatsapp-float" href="https://wa.me/{{ site_settings.contact_phone|cut:' '|cut:'+'|cut:'('|cut:')'|cut:'-' }}" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp" title="Chat with us on WhatsApp">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+    {% endif %}
 </body>
 </html>
